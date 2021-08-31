@@ -217,3 +217,11 @@ body {
   width: 80%;
   margin: auto;
 }
+
+.submission-form td{
+  padding: 5px;
+}
+
+.submission-form input, textarea {
+  padding: 4px;
+}

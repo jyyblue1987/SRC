@@ -41,17 +41,17 @@ export default function Home() {
     return (
         <div>
             <div>
-                <h1 class="table-title">Students Table</h1>
-                <div class="flex justify-center px-4 sm:px-6 lg:px-8">
-                    <div class="relative"> 
-                        <input type="text" class="h-10 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none" onChange={onSearch} placeholder="Search student..."/>
-                        <div class="absolute top-2 right-3"> 
-                            <i class="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i> 
+                <h1 className="table-title">Students Table</h1>
+                <div className="flex justify-center px-4 sm:px-6 lg:px-8">
+                    <div className="relative"> 
+                        <input type="text" className="h-10 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none" onChange={onSearch} placeholder="Search student..."/>
+                        <div className="absolute top-2 right-3"> 
+                            <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i> 
                         </div>
                     </div>
                 </div>
-                <table class="employees-table">
-                    <thead class="employees-table-head">
+                <table className="employees-table">
+                    <thead className="employees-table-head">
                         <tr>
                             <th>ID</th>
                             <th>Firstname</th>
@@ -62,7 +62,7 @@ export default function Home() {
                         <th></th>
                         </tr>
                     </thead>
-                    <tbody class="employees-table-body">
+                    <tbody className="employees-table-body">
                         {
                             filterData.map(item => (
                                 <tr key={item.id} onClick={() => onProfile(item)}>
@@ -72,7 +72,7 @@ export default function Home() {
                                     <td>{item['dateOfBirth']}</td>
                                     <td>{item['address'][0]['line1']} {item['address'][0]['line2']} {item['address'][0]['city']}</td>
                                     <td>{item['submissions'].length}</td>
-                                    <td><i class="fa fa-edit fa-lg"></i></td>
+                                    <td><i className="fa fa-edit fa-lg"></i></td>
                                 </tr>        
                             ))
                         }                   
