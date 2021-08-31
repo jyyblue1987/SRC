@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 import {
 	BrowserRouter as Router,
@@ -16,6 +17,9 @@ function App() {
 				<Switch>
 					<Route exact path="/">
 						<Home />
+					</Route>
+					<Route exact path="/profile/:id">
+						<Profile />
 					</Route>
 				</Switch>
 			</div>

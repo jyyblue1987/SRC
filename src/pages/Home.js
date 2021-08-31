@@ -1,9 +1,11 @@
 import {useEffect, useState, useRef} from 'react';
+import {useHistory} from 'react-router-dom';
 import {BASE_URL} from '../config';
 
 export default function Home() {
     const students = useRef([]);
     const [filterData, setFilterData] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {        
         getStudentData();
@@ -31,6 +33,11 @@ export default function Home() {
         setFilterData(filter_data);
     }
 
+    const onProfile = (item) => {
+        console.log(item);
+        history.push("/profile/" + item.id);
+    }
+
     return (
         <div>
             <div>
@@ -46,24 +53,26 @@ export default function Home() {
                 <table class="employees-table">
                     <thead class="employees-table-head">
                         <tr>
-                        <th>Firstname</th>
-                        <th>Lastname</th> 
-                        <th>Birthday</th>
-                        <th>Address</th>
-                        <th>Submissions</th>
+                            <th>ID</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th> 
+                            <th>Birthday</th>
+                            <th>Address</th>
+                            <th>Submissions</th>
                         <th></th>
                         </tr>
                     </thead>
                     <tbody class="employees-table-body">
                         {
                             filterData.map(item => (
-                                <tr key={item.id}>
+                                <tr key={item.id} onClick={() => onProfile(item)}>
+                                    <td>{item['id']}</td>
                                     <td>{item['firstName']}</td>
                                     <td>{item['lastName']}</td> 
                                     <td>{item['dateOfBirth']}</td>
                                     <td>{item['address'][0]['line1']} {item['address'][0]['line2']} {item['address'][0]['city']}</td>
                                     <td>{item['submissions'].length}</td>
-                                    <td><i class="fa fa-trash fa-lg"></i></td>
+                                    <td><i class="fa fa-edit fa-lg"></i></td>
                                 </tr>        
                             ))
                         }                   
