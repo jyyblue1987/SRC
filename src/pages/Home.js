@@ -46,6 +46,32 @@ export default function Home() {
         setShowModal(true);
     }
 
+    const onChangeAddress = (event, key) => {
+        const student1 = {...student};
+        student1['address'][0][key] = event.target.value;
+
+        setStudent(student1);
+    }
+
+    const onSaveChanges = async() => {
+        setShowModal(false);
+
+        const res = await fetch(`${BASE_URL}students/${student.id}/address/${address.id}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(address)
+        });
+        const data = await res.json();
+        console.log("Changed", data);
+
+        await getStudentData();
+    }
+
+    const address = student.address[0];
+
     return (
         <div>
             <div>
@@ -113,9 +139,66 @@ export default function Home() {
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
-                                    <label>Address:</label>
-                                    &nbsp;
-                                    <input type="text" value={student.address[0]['city']} />
+                                    <form class="w-full max-w-sm">
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    City
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={address['city']} onChange={(event) => onChangeAddress(event, 'city')}  />
+                                            </div>
+                                        </div>
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    Line1
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={address['line1']}  onChange={(event) => onChangeAddress(event, 'line1')}/>
+                                            </div>
+                                        </div> 
+
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    Line2
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={address['line2']}  onChange={(event) => onChangeAddress(event, 'line2')}/>
+                                            </div>
+                                        </div>                                   
+
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    State
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={address['state']}  onChange={(event) => onChangeAddress(event, 'state')}/>
+                                            </div>
+                                        </div>    
+
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    Zip
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={address['zip']}  onChange={(event) => onChangeAddress(event, 'zip')}/>
+                                            </div>
+                                        </div>                                       
+                                    </form>
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -129,7 +212,7 @@ export default function Home() {
                                     <button
                                         className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={() => onSaveChanges()}
                                     >
                                         Save Changes
                                     </button>
