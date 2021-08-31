@@ -71,6 +71,20 @@ export default function Home() {
     }
 
     const address = student.address[0];
+    const allergies = student.allergies;
+
+    const people = [
+        {
+          name: 'Jane Cooper',
+          title: 'Regional Paradigm Technician',
+          department: 'Optimization',
+          role: 'Admin',
+          email: 'jane.cooper@example.com',
+          image:
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
+        },
+        // More people...
+      ]
 
     return (
         <div>
@@ -199,6 +213,53 @@ export default function Home() {
                                             </div>
                                         </div>                                       
                                     </form>
+                                    <table className="min-w-full divide-y divide-gray-200">
+                                        <thead className="bg-gray-50">
+                                            <tr>
+                                            <th
+                                                scope="col"
+                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >
+                                                Type
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >
+                                                Severity
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >
+                                                Description
+                                            </th>              
+                                            <th scope="col" className="relative px-6 py-3">
+                                                <span className="sr-only">Delete</span>
+                                            </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {allergies.map((item) => (
+                                                <tr key={item.id}>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center">
+                                                        {item['type']}
+                                                    </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        {item['severity']}
+                                                    </td>                    
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item['description']}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                            Delete
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                        </table>
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
