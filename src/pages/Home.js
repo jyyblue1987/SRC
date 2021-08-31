@@ -8,6 +8,7 @@ export default function Home() {
     const history = useHistory();
     const [showModal, setShowModal] = useState(false);
     const [student, setStudent] = useState({address: [{}], allergies: []});
+    const [allergyNum, setAllergyNum] = useState(-1);
 
     useEffect(() => {        
         getStudentData();
@@ -44,6 +45,7 @@ export default function Home() {
         event.stopPropagation();       
         setStudent(item);
         setShowModal(true);
+        setAllergyNum(-1);
     }
 
     const onChangeAddress = (event, key) => {
@@ -53,9 +55,27 @@ export default function Home() {
         setStudent(student1);
     }
 
+
+    const onSelectAllergy = (item) => {
+        const index = allergies.findIndex(row => item.id === row.id);
+        console.log("setAllergyNum", item, index)
+        setAllergyNum(index);
+    }
+
+    const onChangeAllegry = (event, key) => {
+        if( allergyNum < 0 )
+            return;
+
+        const student1 = {...student};
+        student1['allergies'][allergyNum][key] = event.target.value;
+
+        setStudent(student1);
+    }
+
     const onSaveChanges = async() => {
         setShowModal(false);
 
+        // update address
         const res = await fetch(`${BASE_URL}students/${student.id}/address/${address.id}`, {
             method: 'PUT',
             headers: {
@@ -67,24 +87,30 @@ export default function Home() {
         const data = await res.json();
         console.log("Changed", data);
 
+        // update allergy
+        for(var i = 0; i < allergies.length; i++)
+        {
+            const row = allergies[i];
+            const res = await fetch(`${BASE_URL}students/${student.id}/allergies/${row.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(row)
+            });
+            
+            const data = await res.json();
+            console.log("Allergy Changed", data);            
+        }
+
         await getStudentData();
     }
 
+
     const address = student.address[0];
     const allergies = student.allergies;
-
-    const people = [
-        {
-          name: 'Jane Cooper',
-          title: 'Regional Paradigm Technician',
-          department: 'Optimization',
-          role: 'Admin',
-          email: 'jane.cooper@example.com',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-        },
-        // More people...
-      ]
+    const allergy = allergyNum >= 0 ? allergies[allergyNum] :  {}; 
 
     return (
         <div>
@@ -251,15 +277,51 @@ export default function Home() {
                                                         {item['severity']}
                                                     </td>                    
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item['description']}</td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium" onClick={() => onSelectAllergy(item)}>
                                                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                            Delete
+                                                            Edit
                                                         </a>
                                                     </td>
                                                 </tr>
                                             ))}
                                         </tbody>
-                                        </table>
+                                    </table>
+                                    <form class="w-full max-w-sm">
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    Type
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={allergy['type']} onChange={(event) => onChangeAllegry(event, 'type')}  />
+                                            </div>
+                                        </div>
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    Severity
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={allergy['severity']}  onChange={(event) => onChangeAllegry(event, 'liseverityne1')}/>
+                                            </div>
+                                        </div> 
+
+                                        <div class="md:flex md:items-center mb-3">
+                                            <div class="md:w-1/3">
+                                                <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                                                    Description
+                                                </label>
+                                            </div>
+                                            <div class="md:w-2/3">
+                                                <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
+                                                    value={allergy['description']}  onChange={(event) => onChangeAllegry(event, 'description')}/>
+                                            </div>
+                                        </div>                                    
+                                    </form>
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
