@@ -33,7 +33,8 @@ export default function Home() {
 
     return (
         <div>
-            <div class=" bg-gray-200">
+            <div>
+                <h1 class="table-title">Students Table</h1>
                 <div class="flex justify-center px-4 sm:px-6 lg:px-8">
                     <div class="relative"> 
                         <input type="text" class="h-10 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none" onChange={onSearch} placeholder="Search student..."/>
@@ -42,69 +43,34 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+                <table class="employees-table">
+                    <thead class="employees-table-head">
+                        <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th> 
+                        <th>Birthday</th>
+                        <th>Address</th>
+                        <th>Submissions</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="employees-table-body">
+                        {
+                            filterData.map(item => (
+                                <tr key={item.id}>
+                                    <td>{item['firstName']}</td>
+                                    <td>{item['lastName']}</td> 
+                                    <td>{item['dateOfBirth']}</td>
+                                    <td>{item['address'][0]['line1']} {item['address'][0]['line2']} {item['address'][0]['city']}</td>
+                                    <td>{item['submissions'].length}</td>
+                                    <td><i class="fa fa-trash fa-lg"></i></td>
+                                </tr>        
+                            ))
+                        }                   
 
-                <div class="flex flex-col">
-                    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Name
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Birthday
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Address
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Submissions
-                                        </th>
-                                        <th scope="col" class="relative px-6 py-3">
-                                            <span class="sr-only">Edit</span>
-                                        </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-
-                                        {
-                                            filterData.map(item => (
-                                                <tr key={item.id}>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="flex items-center">                                                
-                                                            <div class="ml-1">
-                                                                <div class="text-sm font-medium text-gray-900">
-                                                                {item['firstName']} {item['lastName']}
-                                                                </div>                                                    
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">{item['dateOfBirth']}</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        {item['address'][0]['line1']} {item['address'][0]['line2']} {item['address'][0]['city']}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {item['submissions'].length}                                                                                                                
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        }
-
-                                       
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    </tbody>
+                </table>
+            </div>               
         </div>
     )
 }
