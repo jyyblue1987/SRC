@@ -1,3 +1,5 @@
+import AddressInput from "./AddressInput";
+
 export default function Modal({student, allergyNum, showModal, onChangeAddress, onChangeAllegry, onSelectAllergy, onSaveChanges}) {
     const address = student.address[0];
     const allergies = student.allergies;
@@ -27,65 +29,37 @@ export default function Modal({student, allergyNum, showModal, onChangeAddress, 
                         </div>
                         {/*body*/}
                         <div className="relative p-6 flex-auto">
-                            <form class="w-full max-w-sm">
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            City
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={address['city']} onChange={(event) => onChangeAddress(event, 'city')}  />
-                                    </div>
-                                </div>
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            Line1
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={address['line1']}  onChange={(event) => onChangeAddress(event, 'line1')}/>
-                                    </div>
-                                </div> 
-
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            Line2
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={address['line2']}  onChange={(event) => onChangeAddress(event, 'line2')}/>
-                                    </div>
-                                </div>                                   
-
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            State
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={address['state']}  onChange={(event) => onChangeAddress(event, 'state')}/>
-                                    </div>
-                                </div>    
-
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            Zip
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={address['zip']}  onChange={(event) => onChangeAddress(event, 'zip')}/>
-                                    </div>
-                                </div>                                       
+                            <form class="w-full max-w-sm">                               
+                                <AddressInput 
+                                    label="City"
+                                    model={address}
+                                    key1={"city"}
+                                    onChangeAddress={onChangeAddress}
+                                />
+                                <AddressInput 
+                                    label="Line1"
+                                    model={address}
+                                    key1={"line1"}
+                                    onChangeAddress={onChangeAddress}
+                                />
+                                <AddressInput 
+                                    label="Line2"
+                                    model={address}
+                                    key1={"line2"}
+                                    onChangeAddress={onChangeAddress}
+                                />
+                                <AddressInput 
+                                    label="State"
+                                    model={address}
+                                    key1={"state"}
+                                    onChangeAddress={onChangeAddress}
+                                />
+                                <AddressInput 
+                                    label="Zip"
+                                    model={address}
+                                    key1={"zip"}
+                                    onChangeAddress={onChangeAddress}
+                                />                                    
                             </form>
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
