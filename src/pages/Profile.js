@@ -4,16 +4,12 @@ import {
 
 import {useEffect, useState} from 'react';
 import {BASE_URL} from '../config';
+import SubmissionForm from './SubmissionForm';
 
 export default function Profile(props) {
     let { id } = useParams();
     const history = useHistory();
     const [student, setStudent] = useState({address: [{}], submissions: []});
-
-    const [name, setName] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const [difficulty, setDifficulty] = useState(1);
-    const [note, setNote] = useState('');
 
     useEffect(() => {        
         getStudentData();
@@ -32,8 +28,7 @@ export default function Profile(props) {
         history.goBack();        
     }
 
-    const onClickAdd = async(event) => {
-        console.log("Name", name);
+    const onClickAdd = async(event, name, dueDate, difficulty, note) => {        
         const res = await fetch(`${BASE_URL}students/${id}/submissions`, {
             method: 'POST',
             headers: {
@@ -45,11 +40,7 @@ export default function Profile(props) {
         const data = await res.json();
         console.log("Posted", data);
 
-        setName('');
-        setDueDate('');
-        setDifficulty(1);
-        setNote('');
-
+        
         await getStudentData();
     }
     
@@ -110,51 +101,9 @@ export default function Profile(props) {
                         </tbody>
                     </table>                 
                 </div>      
-                <div style={{marginTop: 20}}>
-                    <table className="submission-form">
-                        <tr>
-                            <td>
-                                Name:
-                            </td>
-                            <td>
-                                <input type="text" value={name} onChange={(event) => setName(event.target.value) }/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Due date:
-                            </td>
-                            <td>
-                                <input type="date" value={dueDate}  onChange={(event) => setDueDate(event.target.value) }/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Difficulty:
-                            </td>
-                            <td>
-                                <input type="number"  value={difficulty}  onChange={(event) => setDifficulty(event.target.value) } />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Teacher Note:
-                            </td>
-                            <td>
-                                <textarea cols="70" value={note} onChange={(event) => setNote(event.target.value) } ></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>                                
-                            </td>
-                            <td>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={(event) => onClickAdd(event)}>
-                                    Add Submission
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>   
+                <SubmissionForm 
+                    onClickAdd={onClickAdd}
+                    />
             </div>
         </div>
     )
