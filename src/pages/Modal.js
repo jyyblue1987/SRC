@@ -1,4 +1,4 @@
-import AddressInput from "./AddressInput";
+import FormInput from "./FormInput";
 
 export default function Modal({student, allergyNum, showModal, onChangeAddress, onChangeAllegry, onSelectAllergy, onSaveChanges}) {
     const address = student.address[0];
@@ -30,35 +30,35 @@ export default function Modal({student, allergyNum, showModal, onChangeAddress, 
                         {/*body*/}
                         <div className="relative p-6 flex-auto">
                             <form class="w-full max-w-sm">                               
-                                <AddressInput 
+                                <FormInput 
                                     label="City"
                                     model={address}
                                     key1={"city"}
-                                    onChangeAddress={onChangeAddress}
+                                    onChange={onChangeAddress}
                                 />
-                                <AddressInput 
+                                <FormInput 
                                     label="Line1"
                                     model={address}
                                     key1={"line1"}
-                                    onChangeAddress={onChangeAddress}
+                                    onChange={onChangeAddress}
                                 />
-                                <AddressInput 
+                                <FormInput 
                                     label="Line2"
                                     model={address}
                                     key1={"line2"}
-                                    onChangeAddress={onChangeAddress}
+                                    onChange={onChangeAddress}
                                 />
-                                <AddressInput 
+                                <FormInput 
                                     label="State"
                                     model={address}
                                     key1={"state"}
                                     onChangeAddress={onChangeAddress}
                                 />
-                                <AddressInput 
+                                <FormInput 
                                     label="Zip"
                                     model={address}
                                     key1={"zip"}
-                                    onChangeAddress={onChangeAddress}
+                                    onChange={onChangeAddress}
                                 />                                    
                             </form>
                             <table className="min-w-full divide-y divide-gray-200">
@@ -108,41 +108,25 @@ export default function Modal({student, allergyNum, showModal, onChangeAddress, 
                                     ))}
                                 </tbody>
                             </table>
-                            <form class="w-full max-w-sm">
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            Type
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={allergy['type']} onChange={(event) => onChangeAllegry(event, 'type')}  />
-                                    </div>
-                                </div>
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            Severity
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={allergy['severity']}  onChange={(event) => onChangeAllegry(event, 'severity')}/>
-                                    </div>
-                                </div> 
-
-                                <div class="md:flex md:items-center mb-3">
-                                    <div class="md:w-1/3">
-                                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-                                            Description
-                                        </label>
-                                    </div>
-                                    <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" 
-                                            value={allergy['description']}  onChange={(event) => onChangeAllegry(event, 'description')}/>
-                                    </div>
-                                </div>                                    
+                            <form class="w-full max-w-sm">                        
+                                <FormInput 
+                                    label="Type"
+                                    model={allergy}
+                                    key1={"type"}
+                                    onChange={onChangeAllegry}
+                                />     
+                                <FormInput 
+                                    label="Severity"
+                                    model={allergy}
+                                    key1={"severity"}
+                                    onChange={onChangeAllegry}
+                                />     
+                                <FormInput 
+                                    label="Description"
+                                    model={allergy}
+                                    key1={"description"}
+                                    onChange={onChangeAllegry}
+                                />                                                   
                             </form>
                         </div>
                         {/*footer*/}
